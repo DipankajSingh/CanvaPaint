@@ -1,3 +1,4 @@
+'use strict'
 // default canvas size
 const size = 400
 // creating element called paper to dwar on and add layers to it
