@@ -1,14 +1,65 @@
 'use strict'
-// default canvas size
+// default canvas size and initilizing global variables
 const size = 400
+let penSize = 10
 // creating element called paper to dwar on and add layers to it
 const paper = document.createElement('div')
-paper.style.height = size + "px"
-paper.style.width = size + "px"
-paper.style.border = '1px solid black'
+paper.classList.add('CanvasPaper')
 // paper.style.backgroundColor = "red"
 document.body.append(paper)
+// this is will functon select element(s) with the given selctor
+function $(selector = 'body') {
+    const e = document.querySelectorAll(selector)
+    if (e.length == 1) return e[0]
+    if (e.length > 1) return e
+}
+//  opening and closing tab
+Array.from($('.toolItem')).forEach((elm) => {
+    elm.addEventListener('click', (e) => {
+        elm.children[1].classList.toggle('hidden')
+    })
+})
 
+// // setting pen sizes
+// Array.from($('.pensTab').children).map((sizeElm) => {
+//     sizeElm.addEventListener('click', (e) => {
+//         // setting pen sizes
+//         switch (e.target.value) {
+//             case 'penS':
+//                 penSize = 10
+//                 break;
+//             case 'penM':
+//                 penSize = 15
+//                 break;
+//             case 'penL':
+//                 penSize = 20
+//                 break;
+//             case 'penXL':
+//                 penSize = 30
+//             default:
+//                 break;
+//         }
+//         $('#currentPen').innerHTML = e.target.innerHTML
+//     })
+// })
+
+// // close mini window if outer click
+// document.addEventListener('click', (e) => {
+//     if (e.target != $('.pens') && ![...$('.pens').classList].includes('hidden')) {
+//         $('.pens').classList.add('hidden')
+//     }
+// })
+
+//  storing the mouse X And Y position 
+const mouse = {
+    x: undefined,
+    y: undefined
+}
+// setting x & y position
+document.addEventListener('mousemove', (event) => {
+    mouse.x = event.x
+    mouse.y = event.y
+})
 
 class Layer {
     //  this variable or static variable contains all the layer that are created
@@ -27,9 +78,8 @@ class Layer {
     }
 
     draw() {
-        this.context.arc()
+
     }
 }
 
-let layer1 = new Layer(true)
-console.log(Layer.layers)
+let layer1 = new Layer()

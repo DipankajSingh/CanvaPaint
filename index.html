@@ -6,11 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script defer src="index.js"></script>
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>CanvaPaint</title>
 </head>
 
-<body style="height: 100vh;width: 100vw;">
+<body>
+    <div class="tools">
 
+        <div class="toolItem ">
+            <span id="currentSelection">p</span>
+            <div class="pensTab hidden">
+                <button id="penS" class="tabItem active">S</button>
+                <button id="penM" class="tabItem ">M</button>
+                <button id="penL" class="tabItem ">L</button>
+                <button id="penXL" class="tabItem ">XL</button>
+            </div>
+        </div>
+
+        <div class="toolItem ">
+            <span id="currentSelection">arc</span>
+            <div class="shapesTab hidden">
+                <button id="arc" class="tabItem active">arc</button>
+                <button id="square" class="tabItem ">square</button>
+                <button id="triangle" class="tabItem ">triangle</button>
+                <button id="line" class="tabItem ">Line</button>
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
