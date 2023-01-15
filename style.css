@@ -6,6 +6,12 @@
 
 :root {
     --nav-size: 5rem;
+    --radius: .2rem;
+    --h: 115;
+    --s: 59%;
+    --l: 2%;
+    --accent-color: hsl(var(--h), var(--s), var(--l));
+    --colorMixer: hsl(115, 59%, 15%);
 }
 
 body {
@@ -18,21 +24,55 @@ body {
     position: absolute;
     display: flex;
     width: 100%;
-    background-color: rgb(32, 48, 48);
+    background-color: var(--accent-color);
     top: 0;
     height: var(--nav-size);
+    padding: .3rem;
 }
 
 /* "pens" is the main container for the pens */
 .toolItem {
+    position: relative;
     height: 2rem;
     width: 2rem;
-    background-color: rgb(148, 145, 145);
+    background-color: hsl(var(--h), var(--s), 20%);
+    margin: .3rem;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius);
+}
+
+
+.toolItem>div {
+    z-index: 10;
+    position: absolute;
+    height: max-content;
+    width: max-content;
+    padding: .2rem;
+    top: 100%;
+    left: 100%;
+    background-color: hsl(var(--h), var(--s), 20%);
+    border-radius: var(--radius);
+}
+
+.toolItem>div button {
+    padding: 10px;
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--radius);
+}
+
+.toolItem>div button:hover {
+    background-color: hsl(var(--h), var(--s), 26%);
 }
 
 .hidden {
     display: none;
 }
+
+
 
 .CanvasPaper {
     position: absolute;

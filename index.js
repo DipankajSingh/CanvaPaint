@@ -1,8 +1,5 @@
 'use strict'
-// default canvas size and initilizing global variables
-const size = 400
-let penSize = 10
-// creating element called paper to dwar on and add layers to it
+// creating element called paper to draw on and add layers to it
 const paper = document.createElement('div')
 paper.classList.add('CanvasPaper')
 // paper.style.backgroundColor = "red"
@@ -19,6 +16,8 @@ Array.from($('.toolItem')).forEach((elm) => {
         elm.children[1].classList.toggle('hidden')
     })
 })
+
+
 
 // // setting pen sizes
 // Array.from($('.pensTab').children).map((sizeElm) => {
@@ -45,16 +44,23 @@ Array.from($('.toolItem')).forEach((elm) => {
 
 // // close mini window if outer click
 // document.addEventListener('click', (e) => {
-//     if (e.target != $('.pens') && ![...$('.pens').classList].includes('hidden')) {
-//         $('.pens').classList.add('hidden')
+//     if (e.target !== $('.toolItem').children[1]) {
 //     }
 // })
 
-//  storing the mouse X And Y position 
+//  Important constants and variables
 const mouse = {
     x: undefined,
     y: undefined
 }
+const layers = []
+let activeLayer = null
+let penSize = 5
+let isDrawing = false// check if drawing
+
+
+
+
 // setting x & y position
 document.addEventListener('mousemove', (event) => {
     mouse.x = event.x
@@ -63,23 +69,29 @@ document.addEventListener('mousemove', (event) => {
 
 class Layer {
     //  this variable or static variable contains all the layer that are created
-    static layers = []
-    // setting defualt canvas size if theres no variabe called size
-    static canvasX = size || 400
-    static canvasY = size || 400
+    static layerSize = 400
     //  constructor function, this will add a new layer or canvas element on paper when creating intences
     constructor() {
         this.canvas = document.createElement("canvas")
         this.context = this.canvas.getContext("2d")
-        this.canvas.height = Layer.canvasY
-        this.canvas.width = Layer.canvasY
-        Layer.layers.push(this.canvas)
+        this.canvas.height = Layer.layerSize
+        this.canvas.width = Layer.layerSize
+        layers.push(this)
         paper.append(this.canvas)
     }
 
-    draw() {
 
+
+    drawWithPen(color = "lime") {
+        let canvasRect = this.canvas.getBoundingClientRect();
+        this.context.beginPath();
+        this.context.arc(mouse.x - canvasRect.left, mouse.y - canvasRect.top, penSize, 0, 2 * Math.PI);
+        this.context.fillStyle = color
+        this.context.fill()
+        this.context.closePath()
     }
 }
 
 let layer1 = new Layer()
+layer1.drawWithPen()
+
