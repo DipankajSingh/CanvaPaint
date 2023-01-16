@@ -1,4 +1,10 @@
 'use strict'
+import { pen } from "./Assets/icons.js";
+// setting pen weights accordingly 
+[...$('.toolItem')[0].children[1].children].forEach((element, index) => {
+    element.innerHTML = pen()
+    element.style.padding = `${10 + (index * 1.5)}px`
+})
 // creating element called paper to draw on and add layers to it
 const paper = document.createElement('div')
 paper.classList.add('CanvasPaper')

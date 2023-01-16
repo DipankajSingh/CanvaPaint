@@ -53,22 +53,30 @@ body {
     left: 100%;
     background-color: hsl(var(--h), var(--s), 20%);
     border-radius: var(--radius);
+    display: flex;
 }
 
-.toolItem>div button {
-    padding: 10px;
+.toolItem>div button,
+.currentSelection {
     height: 2.5rem;
     width: 2.5rem;
     background-color: transparent;
     border: none;
     border-radius: var(--radius);
+    display: grid;
+    place-items: center;
 }
 
 .toolItem>div button:hover {
     background-color: hsl(var(--h), var(--s), 26%);
 }
 
-.hidden {
+.toolItem>div button>svg {
+    height: 200%;
+    width: 200%;
+}
+
+.toolItem>div.hidden {
     display: none;
 }
 

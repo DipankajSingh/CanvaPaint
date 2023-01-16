@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="index.js"></script>
+    <script defer type="module" src="index.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>CanvaPaint</title>
 </head>
@@ -24,12 +24,15 @@
         </div>
 
         <div class="toolItem ">
-            <span id="currentSelection">arc</span>
+            <span id="currentSelection">shape</span>
             <div class="shapesTab hidden">
-                <button id="arc" class="tabItem active">arc</button>
-                <button id="square" class="tabItem ">square</button>
-                <button id="triangle" class="tabItem ">triangle</button>
-                <button id="line" class="tabItem ">Line</button>
+                <button id="arc" class="tabItem active"><img src="./Assets/circle-svgrepo-com.svg" alt="arc"></button>
+                <button id="square" class="tabItem "><img src="./Assets/square-svgrepo-com.svg" alt="square"></button>
+                <button id="triangle" class="tabItem "><img src="./Assets/triangle-svgrepo-com.svg"
+                        alt="triangle"></button>
+                <button id="line" class="tabItem "><img src="./Assets/line-svgrepo-com.svg" alt="line"></button>
+                <button id="msgbox" class="tabItem"><img src="./Assets/comment-alt-svgrepo-com.svg"
+                        alt="comment"></button>
             </div>
         </div>
 
