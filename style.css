@@ -32,6 +32,7 @@ body {
 
 /* "pens" is the main container for the pens */
 .toolItem {
+    padding: .3rem;
     position: relative;
     height: 2rem;
     width: 2rem;

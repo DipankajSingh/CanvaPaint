@@ -1,10 +1,33 @@
 'use strict'
-import { pen } from "./Assets/icons.js";
+import { bucket, pen } from "./Assets/icons.js";
 // setting pen weights accordingly 
-[...$('.toolItem')[0].children[1].children].forEach((element, index) => {
+[...$('.toolItem')[0].children[1].children].reverse().forEach((element, index) => {
     element.innerHTML = pen()
     element.style.padding = `${10 + (index * 1.5)}px`
+    //set penSize
+    element.addEventListener('click', () => {
+        switch (element.id) {
+            case 'penS':
+                penSize = 5
+                break;
+            case 'penL':
+                penSize = 10
+                break;
+            case 'penM':
+                penSize = 13
+                break;
+            case 'penXL':
+                penSize = 16
+                break;
+            default:
+                break;
+        }
+    })
+
 })
+
+// setting bucket
+$('.toolItem')[3].innerHTML = bucket()
 // creating element called paper to draw on and add layers to it
 const paper = document.createElement('div')
 paper.classList.add('CanvasPaper')
@@ -23,43 +46,13 @@ Array.from($('.toolItem')).forEach((elm) => {
     })
 })
 
-
-
-// // setting pen sizes
-// Array.from($('.pensTab').children).map((sizeElm) => {
-//     sizeElm.addEventListener('click', (e) => {
-//         // setting pen sizes
-//         switch (e.target.value) {
-//             case 'penS':
-//                 penSize = 10
-//                 break;
-//             case 'penM':
-//                 penSize = 15
-//                 break;
-//             case 'penL':
-//                 penSize = 20
-//                 break;
-//             case 'penXL':
-//                 penSize = 30
-//             default:
-//                 break;
-//         }
-//         $('#currentPen').innerHTML = e.target.innerHTML
-//     })
-// })
-
-// // close mini window if outer click
-// document.addEventListener('click', (e) => {
-//     if (e.target !== $('.toolItem').children[1]) {
-//     }
-// })
-
 //  Important constants and variables
 const mouse = {
     x: undefined,
     y: undefined
 }
 const layers = []
+
 let activeLayer = null
 let penSize = 5
 let isDrawing = false// check if drawing
