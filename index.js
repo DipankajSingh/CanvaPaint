@@ -1,5 +1,15 @@
 'use strict'
 import { bucket, pen } from "./Assets/icons.js";
+//  Important constants and variables
+const mouse = {
+    x: undefined,
+    y: undefined
+}
+const layers = []
+let activeColor = null
+let activeLayer = null
+let penSize = 5
+let isDrawing = false;// check if drawing
 // setting pen weights accordingly 
 [...$('.toolItem')[0].children[1].children].reverse().forEach((element, index) => {
     element.innerHTML = pen()
@@ -26,8 +36,12 @@ import { bucket, pen } from "./Assets/icons.js";
 
 })
 
-// setting bucket
-$('.toolItem')[3].innerHTML = bucket()
+// setting bucket and color to draw
+$('.toolItem')[3].innerHTML = bucket('black')
+$('#colorInput').addEventListener('change', (e) => {
+    activeColor = e.target.value
+    $('.toolItem')[3].innerHTML = bucket(e.target.value)
+})
 // creating element called paper to draw on and add layers to it
 const paper = document.createElement('div')
 paper.classList.add('CanvasPaper')
@@ -42,20 +56,18 @@ function $(selector = 'body') {
 //  opening and closing tab
 Array.from($('.toolItem')).forEach((elm) => {
     elm.addEventListener('click', (e) => {
-        elm.children[1].classList.toggle('hidden')
+        try {
+            elm.children[1].classList.toggle('hidden')
+        } catch (err) {
+
+        }
     })
 })
 
-//  Important constants and variables
-const mouse = {
-    x: undefined,
-    y: undefined
-}
-const layers = []
 
-let activeLayer = null
-let penSize = 5
-let isDrawing = false// check if drawing
+
+
+
 
 
 
@@ -81,7 +93,7 @@ class Layer {
 
 
 
-    drawWithPen(color = "lime") {
+    drawWithPen(color = "#ae33ff") {
         let canvasRect = this.canvas.getBoundingClientRect();
         this.context.beginPath();
         this.context.arc(mouse.x - canvasRect.left, mouse.y - canvasRect.top, penSize, 0, 2 * Math.PI);
@@ -92,5 +104,14 @@ class Layer {
 }
 
 let layer1 = new Layer()
-layer1.drawWithPen()
+layer1.canvas.addEventListener('mousedown', () => {
+    isDrawing = true
+})
+layer1.canvas.addEventListener('mouseup', () => {
+    isDrawing = false
+})
 
+layer1.canvas.addEventListener('mousemove', () => {
+    if (isDrawing) layer1.drawWithPen(activeColor)
+    return
+})

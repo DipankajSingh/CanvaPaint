@@ -14,8 +14,9 @@
     <div class="tools">
 
         <div class="toolItem ">
-            <span id="currentSelection">p</span>
-            <div class="pensTab ">
+            <span id="currentSelection" class="penTool"><img src="./Assets/paintbrush-garage-tool-svgrepo-com.svg"
+                    alt="pen"></span>
+            <div class="pensTab hidden ">
                 <button id="penS" class="tabItem active">S</button>
                 <button id="penM" class="tabItem ">M</button>
                 <button id="penL" class="tabItem ">L</button>
@@ -24,7 +25,8 @@
         </div>
 
         <div class="toolItem ">
-            <span id="currentSelection">shape</span>
+            <span id="currentSelection" class="shapeTool"><img src="./Assets/shapes-svgrepo-com.svg"
+                    alt="shapes"></span>
             <div class="shapesTab hidden">
                 <button id="arc" class="tabItem active"><img src="./Assets/circle-svgrepo-com.svg" alt="arc"></button>
                 <button id="square" class="tabItem "><img src="./Assets/square-svgrepo-com.svg" alt="square"></button>
@@ -41,8 +43,9 @@
         <div class="toolItem">
             <img src="./Assets/paint-bucket-bucket-svgrepo-com.svg" alt="">
         </div>
-        <div class="toolItem">
-            <label for="colorInput">gf<img src="./Assets/palette-and-brush-svgrepo-com.svg" alt="palate"></label>
+        <div class="toolItem ">
+            <label class="colorPalette" for="colorInput"><img for="colorInput"
+                    src="./Assets/palette-and-brush-svgrepo-com.svg" alt="palate"></label>
             <input type="color" id="colorInput" hidden>
         </div>
 

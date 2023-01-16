@@ -43,6 +43,12 @@ body {
     border-radius: var(--radius);
 }
 
+.colorPalette,
+.shapeTool,
+.penTool {
+    height: 100%;
+    width: 100%;
+}
 
 .toolItem>div {
     z-index: 10;
