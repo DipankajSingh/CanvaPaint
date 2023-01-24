@@ -7,7 +7,7 @@
 :root {
     --nav-size: 5rem;
     --radius: .2rem;
-    --h: 115;
+    --h: 55;
     --s: 59%;
     --l: 2%;
     --accent-color: hsl(var(--h), var(--s), var(--l));
@@ -92,11 +92,12 @@ body {
 .CanvasPaper {
     position: absolute;
     bottom: 0;
-    background-color: brown;
+    background-color: rgb(17, 9, 9);
     width: 100%;
     height: calc(100% - var(--nav-size));
     display: grid;
     place-items: center;
+    z-index: 20;
 }
 
 .CanvasPaper>canvas {

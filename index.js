@@ -1,15 +1,67 @@
 'use strict'
-import { bucket, pen } from "./Assets/icons.js";
-//  Important constants and variables
-const mouse = {
-    x: undefined,
-    y: undefined
+let penSize
+const canvas = document.createElement('canvas')
+canvas.height = 300
+canvas.width = 400
+
+$('.CanvasPaper').appendChild(canvas)
+const ctx = canvas.getContext('2d')
+
+let isDrawing = false
+const lines = [
+    [[46, 45], [76, 35]],
+    [[94, 85], [74, 9]]
+]
+let lastMouseDownPos = [45, 65]
+let lastMouseUpPos = [76, 89]
+
+const boundingRect = canvas.getBoundingClientRect()
+
+canvas.addEventListener('mousedown', e => {
+    lastMouseDownPos = [e.x, e.y]
+    isDrawing = true
+})
+
+canvas.addEventListener('mouseup', e => {
+    isDrawing = false
+    lastMouseUpPos = [e.x, e.y]
+    lines.push([lastMouseDownPos, lastMouseUpPos])
+})
+
+canvas.addEventListener('mousemove', e => {
+    if (isDrawing) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            drawLine(...line[0], ...line[1])
+        }
+        drawLine(lastMouseDownPos[0], lastMouseDownPos[1], e.x, e.y)
+
+
+    }
+})
+
+
+function drawLine(x1 = 50, y1 = 67, x2 = 50, y2 = 70) {
+    ctx.beginPath()
+    ctx.moveTo(x1 - boundingRect.left, y1 - boundingRect.top)
+    ctx.lineTo(x2 - boundingRect.left, y2 - boundingRect.top)
+    ctx.stroke()
 }
-const layers = []
-let activeColor = null
-let activeLayer = null
-let penSize = 5
-let isDrawing = false;// check if drawing
+
+drawLine()
+
+
+
+
+
+
+
+
+
+import { bucket, pen } from "./Assets/icons.js";
+
+;
 // setting pen weights accordingly 
 [...$('.toolItem')[0].children[1].children].reverse().forEach((element, index) => {
     element.innerHTML = pen()
@@ -42,11 +94,7 @@ $('#colorInput').addEventListener('change', (e) => {
     activeColor = e.target.value
     $('.toolItem')[3].innerHTML = bucket(e.target.value)
 })
-// creating element called paper to draw on and add layers to it
-const paper = document.createElement('div')
-paper.classList.add('CanvasPaper')
-// paper.style.backgroundColor = "red"
-document.body.append(paper)
+
 // this is will functon select element(s) with the given selctor
 function $(selector = 'body') {
     const e = document.querySelectorAll(selector)
@@ -62,56 +110,4 @@ Array.from($('.toolItem')).forEach((elm) => {
 
         }
     })
-})
-
-
-
-
-
-
-
-
-
-// setting x & y position
-document.addEventListener('mousemove', (event) => {
-    mouse.x = event.x
-    mouse.y = event.y
-})
-
-class Layer {
-    //  this variable or static variable contains all the layer that are created
-    static layerSize = 400
-    //  constructor function, this will add a new layer or canvas element on paper when creating intences
-    constructor() {
-        this.canvas = document.createElement("canvas")
-        this.context = this.canvas.getContext("2d")
-        this.canvas.height = Layer.layerSize
-        this.canvas.width = Layer.layerSize
-        layers.push(this)
-        paper.append(this.canvas)
-    }
-
-
-
-    drawWithPen(color = "#ae33ff") {
-        let canvasRect = this.canvas.getBoundingClientRect();
-        this.context.beginPath();
-        this.context.arc(mouse.x - canvasRect.left, mouse.y - canvasRect.top, penSize, 0, 2 * Math.PI);
-        this.context.fillStyle = color
-        this.context.fill()
-        this.context.closePath()
-    }
-}
-
-let layer1 = new Layer()
-layer1.canvas.addEventListener('mousedown', () => {
-    isDrawing = true
-})
-layer1.canvas.addEventListener('mouseup', () => {
-    isDrawing = false
-})
-
-layer1.canvas.addEventListener('mousemove', () => {
-    if (isDrawing) layer1.drawWithPen(activeColor)
-    return
 })
