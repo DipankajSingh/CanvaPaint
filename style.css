@@ -11,7 +11,7 @@
     --s: 59%;
     --l: 2%;
     --accent-color: hsl(var(--h), var(--s), var(--l));
-    --colorMixer: hsl(115, 59%, 15%);
+    --colorMixer: #73ff00;
 }
 
 body {
