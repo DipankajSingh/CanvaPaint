@@ -1,33 +1,25 @@
-let canvas = document.getElementById("canvas");
-let context = canvas.getContext("2d");
+const canvas = document.getElementById("myCanvas");
+const ctx = canvas.getContext("2d");
 
+// Draw a line on the canvas
+ctx.beginPath();
+ctx.moveTo(25, 25);
+ctx.lineTo(100, 100);
+ctx.stroke();
 
-let shapePos = []
-// Draw a rectangle
-function rectDraw(drawPos = [15, 10], drawSize = [50, 25]) {
-    context.rect(...drawPos, ...drawSize);
-    context.stroke()
-    shapePos.push(drawPos)
+// Get the image data for the rectangular area that contains the line
+const imgData = ctx.getImageData(25, 25, 100, 100);
+
+// loop through the pixels of the line and change the color to green
+for (let i = 0; i < imgData.data.length; i += 4) {
+    // condition to check if the pixel is on the line
+    if (imgData.data[i + 0] === 0 && imgData.data[i + 1] === 0 && imgData.data[i + 2] === 0) {
+        imgData.data[i + 0] = 170;   // red
+        imgData.data[i + 1] = 15; // green
+        imgData.data[i + 2] = 54;   // blue
+    }
 }
 
-let setDrawStartPos = []
-canvas.addEventListener('mousedown', (e) => {
-    setDrawStartPos.push(e.x, e.y)
-    console.log(setDrawStartPos)
-})
-
-canvas.addEventListener('mouseup', (e) => {
-    rectDraw(setDrawStartPos, [e.clientX, e.clientY])
-    setDrawStartPos = []
-})
-
-rectDraw([24, 22], [50, 25])
-
-// canvas.addEventListener('mousemove', e => {
-//     if (setDrawStartPos.length > 0) {
-//         rectDraw(setDrawStartPos, e.clientX, e.clientY)
-//     }
-// })
-// Restore the initial state of the canvas
-
-// Draw another rectangle
+console.log(imgData)
+// Draw the modified image data back to the canvas
+ctx.putImageData(imgData, 25, 25);

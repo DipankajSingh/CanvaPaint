@@ -23,7 +23,6 @@ document.addEventListener('mousedown', e => {
     lastMouseDownPos = [e.x, e.y]
     isDrawing = true
     snapShot = ctx.getImageData(0, 0, canvas.width, canvas.height)
-
 })
 
 document.addEventListener('mouseup', e => {
@@ -39,45 +38,48 @@ function updateCanvas() {
 }
 
 
-canvas.addEventListener('mousemove', e => {
-    if (isDrawing) {
-        // for (let i = 0; i < lines.length; i++) {
-        //     const line = lines[i];
-        //     drawLine(...line[0], ...line[1])
-        // }
+canvas.addEventListener('mousemove', (e) => {
+    requestAnimationFrame(() => {
+        if (isDrawing) {
+            // for (let i = 0; i < lines.length; i++) {
+            //     const line = lines[i];
+            //     drawLine(...line[0], ...line[1])
+            // }
 
-        switch (DrawTool) {
-            case 'line':
-                // ctx.clearRect(0, 0, canvas.width, canvas.height)
-                // ctx.putImageData(snapShot, 0, 0)
-                updateCanvas()
-                drawLine(lastMouseDownPos[0], lastMouseDownPos[1], e.x, e.y,)
+            switch (DrawTool) {
+                case 'line':
+                    // ctx.clearRect(0, 0, canvas.width, canvas.height)
+                    // ctx.putImageData(snapShot, 0, 0)
+                    updateCanvas()
+                    drawLine(lastMouseDownPos[0], lastMouseDownPos[1], e.x, e.y,)
 
-                break;
-            case 'pen':
-                drawPen(e, penSize)
-                break;
-            case 'arc':
-                updateCanvas()
-                drawArc(
-                    lastMouseDownPos[0],
-                    lastMouseDownPos[1],
-                    Math.sqrt(
-                        Math.pow((e.x - boundingRect.left) - (lastMouseDownPos[0] - boundingRect.left), 2)
-                        +
-                        Math.pow((e.y - boundingRect.top) - (lastMouseDownPos[1] - boundingRect.top), 2)
+                    break;
+                case 'pen':
+                    drawPen(e, penSize)
+                    break;
+                case 'arc':
+                    updateCanvas()
+                    drawArc(
+                        lastMouseDownPos[0],
+                        lastMouseDownPos[1],
+                        Math.sqrt(
+                            Math.pow((e.x - boundingRect.left) - (lastMouseDownPos[0] - boundingRect.left), 2)
+                            +
+                            Math.pow((e.y - boundingRect.top) - (lastMouseDownPos[1] - boundingRect.top), 2)
+                        )
                     )
-                )
-                break;
-            case 'square':
-                updateCanvas()
-                drawRect(e)
-                break
-            default:
-                break;
+                    break;
+                case 'square':
+                    updateCanvas()
+                    drawRect(e)
+                    break
+                default:
+                    break;
+            }
         }
-    }
+    })
 })
+
 function drawRect(event) {
     ctx.beginPath()
     ctx.rect(
@@ -126,8 +128,17 @@ function drawLine(x1 = 50, y1 = 67, x2 = 50, y2 = 70) {
 
 
 import { bucket, pen } from "./Assets/icons.js";
-
+import alert from './notificeJS/notifice_v2.0.0.js';
 ;
+const notify = new alert({ autoClose: 2000 })
+$('#bucketTab').addEventListener('click', () => {
+    notify.rgbColor = [150, 200, 0]
+    notify.show('Will Be Ready Soon!')
+
+})
+
+
+    ;
 // setting pen weights accordingly 
 [...$('.toolItem')[0].children[1].children].reverse().forEach((element, index) => {
     element.innerHTML = pen()
