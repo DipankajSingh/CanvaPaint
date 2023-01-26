@@ -9,7 +9,7 @@ const ctx = canvas.getContext('2d')
 
 let isDrawing = false
 const lines = [
-    [[46, 45], [76, 35]],
+    [[46, 45], [76, 35], { color: "red", lineWidth: 5 }],
     [[94, 85], [74, 9]]
 ]
 let lastMouseDownPos = [45, 65]
