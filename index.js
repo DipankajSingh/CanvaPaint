@@ -1,5 +1,5 @@
 'use strict'
-let penSize = 5
+let penSize = 3
 const canvas = document.createElement('canvas')
 canvas.height = 300
 canvas.width = 400
@@ -32,6 +32,13 @@ document.addEventListener('mouseup', e => {
     // lines.push([lastMouseDownPos, lastMouseUpPos])
 })
 
+
+function updateCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.putImageData(snapShot, 0, 0)
+}
+
+
 canvas.addEventListener('mousemove', e => {
     if (isDrawing) {
         // for (let i = 0; i < lines.length; i++) {
@@ -41,8 +48,9 @@ canvas.addEventListener('mousemove', e => {
 
         switch (DrawTool) {
             case 'line':
-                ctx.clearRect(0, 0, canvas.width, canvas.height)
-                ctx.putImageData(snapShot, 0, 0)
+                // ctx.clearRect(0, 0, canvas.width, canvas.height)
+                // ctx.putImageData(snapShot, 0, 0)
+                updateCanvas()
                 drawLine(lastMouseDownPos[0], lastMouseDownPos[1], e.x, e.y,)
 
                 break;
@@ -50,18 +58,44 @@ canvas.addEventListener('mousemove', e => {
                 drawPen(e, penSize)
                 break;
             case 'arc':
-                drawArc(lastMouseDownPos[0], lastMouseDownPos[1], This should be done first)
+                updateCanvas()
+                drawArc(
+                    lastMouseDownPos[0],
+                    lastMouseDownPos[1],
+                    Math.sqrt(
+                        Math.pow((e.x - boundingRect.left) - (lastMouseDownPos[0] - boundingRect.left), 2)
+                        +
+                        Math.pow((e.y - boundingRect.top) - (lastMouseDownPos[1] - boundingRect.top), 2)
+                    )
+                )
                 break;
+            case 'square':
+                updateCanvas()
+                drawRect(e)
+                break
             default:
                 break;
         }
     }
 })
+function drawRect(event) {
+    ctx.beginPath()
+    ctx.rect(
+        lastMouseDownPos[0] - boundingRect.left,
+        lastMouseDownPos[1] - boundingRect.top,
+        (event.x - boundingRect.left) - (lastMouseDownPos[0] - boundingRect.left),
+        (event.y - boundingRect.top) - (lastMouseDownPos[1] - boundingRect.top)
+    )
+    ctx.lineWidth = penSize
+    ctx.strokeStyle = SelectedColor
+    ctx.stroke()
+}
 
 function drawArc(x, y, size) {
     ctx.beginPath()
     ctx.arc(x - boundingRect.left, y - boundingRect.top, size, 0, 2 * Math.PI)
     ctx.strokeStyle = SelectedColor
+    ctx.lineWidth = penSize
     ctx.stroke()
 }
 
