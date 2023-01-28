@@ -108,3 +108,11 @@ body {
     border: 1px solid lightseagreen;
     width: 100vw;
 }
+
+.textBox {
+    background-color: transparent;
+    border: 1px dotted black;
+    position: absolute;
+    font-size: 32px;
+    resize: both;
+}
