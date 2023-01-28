@@ -1,8 +1,16 @@
 'use strict'
 let penSize = 3
+
 const canvas = document.createElement('canvas')
-canvas.height = 300
-canvas.width = 400
+canvas.height = window.innerHeight - Number(getComputedStyle($('.tools')).height.split('px')[0])
+canvas.width = window.innerWidth
+
+addEventListener('resize', () => {
+    canvas.height = window.innerHeight - Number(getComputedStyle($('.tools')).height.split('px')[0])
+    canvas.width = window.innerWidth
+    ctx.putImageData(snapShot, 0, 0)
+
+})
 
 $('.CanvasPaper').appendChild(canvas)
 const ctx = canvas.getContext('2d')
@@ -28,6 +36,7 @@ document.addEventListener('mousedown', e => {
 document.addEventListener('mouseup', e => {
     isDrawing = false
     lastMouseUpPos = [e.x, e.y]
+    snapShot = ctx.getImageData(0, 0, canvas.width, canvas.height)
     // lines.push([lastMouseDownPos, lastMouseUpPos])
 })
 
@@ -200,3 +209,4 @@ setDrawTool('arc')
 setDrawTool('triangle')
 setDrawTool('square')
 setDrawTool('msgbox')
+
